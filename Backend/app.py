@@ -6,13 +6,26 @@ from routes.routes import taskRouter
 
 
 # Import the function to create tables
-from config.db import create_db # This should match the function name in db.py
+from config.db import create_db 
 
 # Call create_db() to create tables on app startup
 create_db()
 
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
 
 
 @app.exception_handler(RequestValidationError)
